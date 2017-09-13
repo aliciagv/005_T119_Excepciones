@@ -23,6 +23,7 @@ public class MainExcepcionesPersonalizadas {
     public static void main( String[] args) throws IOException {
         
         MyProperties.init("properties/excepciones.properties");
+        
         Scanner sc = new Scanner(System.in);
         System.out.println("Introduce el email");
         String email =sc.nextLine();
