@@ -3,7 +3,9 @@
  */
 package com.cice.main;
 
+import com.cice.config.MyProperties;
 import com.cice.excepciones.EmailNotValidFormatException;
+import java.io.IOException;
 import java.util.Scanner;
 
 import java.util.regex.Matcher;
@@ -18,15 +20,17 @@ public class MainExcepcionesPersonalizadas {
     private static final String PATTERN_EMAIL = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     
-    public static void main( String[] args) {
-    
+    public static void main( String[] args) throws IOException {
+        
+        MyProperties.init("properties/excepciones.properties");
         Scanner sc = new Scanner(System.in);
         System.out.println("Introduce el email");
         String email =sc.nextLine();
         try {
             validaEmail(email);
         } catch (EmailNotValidFormatException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("ERROR CODE: " + ex.getErrorCode()+ " MENSAJE :" +ex.getMessage());
+           
             
         }
        
@@ -39,7 +43,8 @@ public class MainExcepcionesPersonalizadas {
  
         // Match the given input against this pattern
         Matcher matcher = pattern.matcher(email);
-        if (!matcher.matches()) throw new EmailNotValidFormatException(EmailNotValidFormatException.FORMAT_ERROR);
+       // if (!matcher.matches()) throw new EmailNotValidFormatException(EmailNotValidFormatException.FORMAT_ERROR);
+       if (!matcher.matches()) throw new EmailNotValidFormatException("01");
     
     }
 }
